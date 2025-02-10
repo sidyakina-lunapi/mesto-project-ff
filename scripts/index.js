@@ -1,7 +1,7 @@
 
 const placesList = document.querySelector(".places__list");
 
-function renderCard({ name, link }) {
+function addCard({ name, link }) {
 
   const cardTemplate = document.querySelector("#card-template").content;
   const cardElement = cardTemplate
@@ -23,5 +23,5 @@ function deleteCard() {
 }
 
 
-initialCards.forEach(renderCard, deleteCard);
+initialCards.forEach(addCard, deleteCard);
 placesList.append(cardElement);
