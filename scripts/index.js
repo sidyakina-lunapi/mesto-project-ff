@@ -13,8 +13,7 @@ function addCard({ name, link }) {
   cardElement.setAttribute("alt", name);
   const deleteButton = cardElement.querySelector(".card__delete-button");
   deleteButton.addEventListener("click", deleteCard);
-
-  return cardElement;
+  placesList.append(cardElement);
 }
 
 function deleteCard() {
@@ -23,5 +22,5 @@ function deleteCard() {
 }
 
 
-initialCards.forEach(addCard, deleteCard);
-placesList.append(cardElement);
+initialCards.forEach(addCard);
+initialCards.forEach(deleteCard);
