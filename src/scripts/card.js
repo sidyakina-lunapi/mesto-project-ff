@@ -1,6 +1,4 @@
-const placesList = document.querySelector(".places__list");
-
-function addCard({ name, link }, deleteCallback) {
+export function addCard({ name, link }, deleteCallback, imageClickCallback, likeClickCallback) {
     const cardTemplate = document.querySelector("#card-template").content;
     const cardElement = cardTemplate.querySelector(".places__item").cloneNode(true);
 
@@ -8,32 +6,22 @@ function addCard({ name, link }, deleteCallback) {
     cardElement.querySelector(".card__image").src = link;
     cardElement.querySelector(".card__image").setAttribute("alt", name);
 
+
     const deleteButton = cardElement.querySelector(".card__delete-button");
     deleteButton.addEventListener("click", () => {
         deleteCallback(cardElement);
     });
-
+    
+    const likeButton = cardElement.querySelector(".card__like-button");
+    likeButton.addEventListener("click", () => {
+        likeClickCallback(likeButton);
+    });
+    
+    const imageElement = document.querySelector('.popup__caption');
+    const cardImage = cardElement.querySelector(".card__image");
+    cardImage.addEventListener("click", () => {
+        imageClickCallback(link, name, imageElement); 
+    });
+  
     return cardElement; 
-}
-
-function deleteCard(cardElement) {
-    cardElement.remove(); 
-}
-
-initialCards.forEach((CARD)=> {
-    const card = addCard(CARD,deleteCard);
-    placesList.append(card); 
-});
-
-let menu = {
-    width: 200,
-    height: 300,
-    title: "My menu"
-  };
-function multiplyNumeric(obj) {
-  for (let key in obj) {
-    if (tupeof(obj[key]) == 'number') {
-        obj[key] = obj[key]*2;
-    }
-  }
 }
