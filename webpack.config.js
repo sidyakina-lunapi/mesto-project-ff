@@ -1,13 +1,18 @@
-import { resolve, join } from 'path';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import CopyWebpackPlugin from 'copy-webpack-plugin';
+//использую сдачу проекта с помощью арxива
 
-export default {
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+
+module.exports = {
     entry: './src/index.js',
     output: {
-        filename: 'bundle.js',
-        path: resolve(".", 'dist'),
+        filename: 'main.js',
+        path: path.resolve(".", 'dist'),
+        publicPath: '',
     },
+    mode: 'development',
     module: {
         rules: [
             {
@@ -33,6 +38,7 @@ export default {
         new HtmlWebpackPlugin({
             template: './src/index.html',
         }),
+        new CleanWebpackPlugin(),
         new CopyWebpackPlugin({
             patterns: [
                 { from: 'src/images', to: 'images' },
@@ -43,7 +49,7 @@ export default {
     ],
     devServer: {
         static: {
-            directory: join(".", 'dist'),
+            directory: path.join(".", 'dist'),
         },
         open: true,
     },
