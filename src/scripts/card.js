@@ -17,10 +17,9 @@ export function addCard({ name, link }, deleteCallback, imageClickCallback, like
         likeClickCallback(likeButton);
     });
     
-    const imageElement = document.querySelector('.popup__caption');
     const cardImage = cardElement.querySelector(".card__image");
     cardImage.addEventListener("click", () => {
-        imageClickCallback(link, name, imageElement); 
+        imageClickCallback(link, name); 
     });
   
     return cardElement; 
