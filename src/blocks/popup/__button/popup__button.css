@@ -14,14 +14,30 @@
   margin-top: 48px;
 }
 
-.popup__button:hover {
+.popup__button:hover:enabled {
   background: rgba(0, 0, 0, 0.8);
   cursor: pointer;
 }
+
 
 @media screen and (max-width: 568px) {
   .popup__button {
     font-size: 14px;
     line-height: 17px;
   }
+}
+
+.popup__button_disabled {
+  background-color: #f1f1f1;
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.popup__input_type_error {
+  border-color: red;
+}
+
+.popup__error_visible {
+  color: red;
+  font-size: 0.8em;
 }
