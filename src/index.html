@@ -8,7 +8,6 @@
     />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Mesto</title>
-    <link rel="stylesheet" href="./pages/index.css" />
   </head>
 
   <body class="page">
@@ -92,7 +91,7 @@
               maxlength="30"
               required
             />
-            <span class="popup__error card-name-error"></span>
+            <span class="popup__error card-name-input-error"></span>
             <input
               type="url"
               id="url-input"
@@ -101,7 +100,7 @@
               placeholder="Ссылка на картинку"
               required
             />
-            <span class="popup__error url-error"></span>
+            <span class="popup__error url-input-error"></span>
             <button type="submit" class="button popup__button">Создать</button>
           </form>
         </div>
@@ -120,7 +119,7 @@
               placeholder="Ссылка на аватар"
               required
             />
-            <span class="popup__error avatar-url-error"></span>
+            <span class="popup__error avatar-url-input-error"></span>
             <button class="popup__button" type="submit">Сохранить</button>
           </form>
         </div>
@@ -148,7 +147,5 @@
         </div>
       </li>
     </template>
-
-    <script src="./scripts/index.js" type="module"></script>
   </body>
 </html>
