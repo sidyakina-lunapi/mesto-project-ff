@@ -1,5 +1,6 @@
-const cohortId = 'wff-cohort-34'; 
+const cohortId = 'wff-cohort-34';  
 const token = '27219f5e-a0a5-4393-b3fb-e8d6c367e05d';
+const baseUrl = 'https://nomoreparties.co/v1';
 
 const checkResponse = (res) => {
   if (res.ok) {
@@ -9,7 +10,7 @@ const checkResponse = (res) => {
 };
 
 export const getUserData = () => {
-  return fetch(`https://nomoreparties.co/v1/${cohortId}/users/me`, {
+  return fetch(`${baseUrl}/${cohortId}/users/me`, {
     method: 'GET',
     headers: {
       authorization: token,
@@ -18,7 +19,7 @@ export const getUserData = () => {
 };
 
 export const updateUserData = (name, about) => {
-  return fetch(`https://nomoreparties.co/v1/${cohortId}/users/me`, {
+  return fetch(`${baseUrl}/${cohortId}/users/me`, {
     method: 'PATCH',
     headers: {
       authorization: token,
@@ -32,7 +33,7 @@ export const updateUserData = (name, about) => {
 };
 
 export const updateUserAvatar = (avatar) => {
-  return fetch(`https://nomoreparties.co/v1/${cohortId}/users/me/avatar`, {
+  return fetch(`${baseUrl}/${cohortId}/users/me/avatar`, {
     method: 'PATCH',
     headers: {
       authorization: token,
@@ -45,7 +46,7 @@ export const updateUserAvatar = (avatar) => {
 };
 
 export const getCards = () => {
-  return fetch(`https://nomoreparties.co/v1/${cohortId}/cards`, {
+  return fetch(`${baseUrl}/${cohortId}/cards`, {
     method: 'GET',
     headers: {
       authorization: token,
@@ -54,7 +55,7 @@ export const getCards = () => {
 };
 
 export const addNewCard = (name, link) => {
-  return fetch(`https://nomoreparties.co/v1/${cohortId}/cards`, {
+  return fetch(`${baseUrl}/${cohortId}/cards`, {
     method: 'POST',
     headers: {
       authorization: token,
@@ -68,7 +69,7 @@ export const addNewCard = (name, link) => {
 };
 
 export const deleteCard = (cardId) => {
-  return fetch(`https://nomoreparties.co/v1/${cohortId}/cards/${cardId}`, {
+  return fetch(`${baseUrl}/${cohortId}/cards/${cardId}`, {
     method: 'DELETE',
     headers: {
       authorization: token,
@@ -77,7 +78,7 @@ export const deleteCard = (cardId) => {
 };
 
 export const toggleLike = (cardId, isLiked) => {
-  return fetch(`https://nomoreparties.co/v1/${cohortId}/cards/likes/${cardId}`, {
+  return fetch(`${baseUrl}/${cohortId}/cards/likes/${cardId}`, {
     method: isLiked ? 'DELETE' : 'PUT',
     headers: {
       authorization: token,
