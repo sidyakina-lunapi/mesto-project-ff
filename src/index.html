@@ -13,14 +13,14 @@
   <body class="page">
     <div class="page__content">
       <header class="header page__section">
-        <img src="./images/logo.svg" alt="Логотип проекта Mesto" class="logo header__logo">
+        <img src="/images/logo.svg" alt="Логотип проекта Mesto" class="logo header__logo">
         
       </header>
       <main class="content">
         <section class="profile page__section">
           <button
             class="profile__image"
-            style="background-image: url('./images/avatar.jpg')"
+            style="background-image: url('/images/avatar.jpg')"
           ></button>
           <div class="profile__info">
             <h1 class="profile__title">Жак-Ив Кусто</h1>
@@ -86,6 +86,8 @@
               placeholder="Название"
               minlength="2"
               maxlength="30"
+              pattern="^[a-zA-Zа-яА-ЯЁё \-]+$"
+              data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы."
               required
             />
             <span class="popup__error card-name-input-error"></span>

@@ -18,7 +18,7 @@ const hideInputError = (formElement, inputElement, config) => {
 
 const validateInput = (inputElement) => {
   // Проверка для полей имени и описания профиля
-  if (inputElement.id === 'name-input' || inputElement.id === 'description-input') {
+  if (inputElement.id === 'name-input' || inputElement.id === 'description-input' || inputElement.id === 'card-name-input') {
     if (inputElement.validity.patternMismatch) {
       inputElement.setCustomValidity(inputElement.dataset.errorMessage);
       return false;

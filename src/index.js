@@ -11,6 +11,8 @@ import {
 } from './scripts/api.js';
 import { enableValidation, clearValidation } from './scripts/validation.js';
 import './pages/index.css';
+import './images/logo.svg';
+import './images/avatar.jpg';
 
 const validationConfig = {
   formSelector: '.popup__form',
