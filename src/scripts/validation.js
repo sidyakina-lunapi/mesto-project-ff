@@ -1,6 +1,5 @@
 const showInputError = (formElement, inputElement, errorMessage, config) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  console.log(errorElement)
   if (errorElement) {
     inputElement.classList.add(config.inputErrorClass);
     errorElement.textContent = errorMessage;
@@ -17,20 +16,45 @@ const hideInputError = (formElement, inputElement, config) => {
   }
 };
 
-const isValid = (formElement, inputElement, config) => {
-  if (inputElement.validity.patternMismatch) {
-    inputElement.setCustomValidity(inputElement.dataset.errorMessage);
-  } else {
-    inputElement.setCustomValidity("");
+const validateInput = (inputElement) => {
+  // Проверка для полей имени и описания профиля
+  if (inputElement.id === 'name-input' || inputElement.id === 'description-input') {
+    if (inputElement.validity.patternMismatch) {
+      inputElement.setCustomValidity(inputElement.dataset.errorMessage);
+      return false;
+    }
   }
+  // Проверка для поля названия карточки
+  else if (inputElement.id === 'card-name-input') {
+    if (inputElement.value.trim().length < 2 || inputElement.value.trim().length > 30) {
+      inputElement.setCustomValidity('Название должно быть от 2 до 30 символов');
+      return false;
+    }
+  }
+  // Проверка для поля URL картинки
+  else if (inputElement.id === 'url-input') {
+    if (!inputElement.validity.valid) {
+      inputElement.setCustomValidity('Введите корректный URL');
+      return false;
+    }
+  }
+  
+  inputElement.setCustomValidity("");
+  return true;
+};
 
-  if (!inputElement.validity.valid) {
-    showInputError(formElement, inputElement, inputElement.validationMessage, config);
+const isValid = (formElement, inputElement, config) => {
+  const isValidInput = validateInput(inputElement);
+
+  if (!inputElement.validity.valid || !isValidInput) {
+    const errorMessage = inputElement.validationMessage;
+    showInputError(formElement, inputElement, errorMessage, config);
   } else {
     hideInputError(formElement, inputElement, config);
   }
 };
 
+// Остальной код остается без изменений
 const hasInvalidInput = (inputList) => {
   return inputList.some((inputElement) => {
     return !inputElement.validity.valid;
@@ -58,6 +82,8 @@ const setEventListeners = (formElement, config) => {
       isValid(formElement, inputElement, config);
       toggleButtonState(inputList, buttonElement, config);
     });
+    // Добавляем начальную проверку при загрузке формы
+    isValid(formElement, inputElement, config);
   });
 };
 

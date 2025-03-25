@@ -1,4 +1,4 @@
-import { addCard, removeCard, toggleLikeUI, isCardLiked } from './scripts/card.js';
+import { addCard, removeCard, toggleLikeState, isCardLiked } from './scripts/card.js';
 import { openPopup, closePopup, closePopupOverlay } from './scripts/modal.js';
 import {
   getUserData,
@@ -18,7 +18,7 @@ const validationConfig = {
   submitButtonSelector: '.popup__button',
   inactiveButtonClass: 'popup__button_disabled',
   inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible',
+  errorClass: 'popup__error_visible'
 };
 
 enableValidation(validationConfig);
@@ -45,7 +45,7 @@ const popupEditAvatar = document.querySelector('.popup_type_edit-avatar');
 const formEditAvatar = document.querySelector('.popup__form[name="edit-avatar"]');
 const avatarUrlInput = document.querySelector('.popup__input_type_avatar-url');
 
-let currentUserId = null;
+let currentUserId = '';
 
 const updateUserInfo = (userData) => {
   profileTitle.textContent = userData.name;
@@ -69,10 +69,8 @@ const handleFormEditProfile = (evt) => {
 
   updateUserData(name, about)
     .then((userData) => {
-      if (userData) {
-        updateUserInfo(userData);
-        closePopup(popupEdit);
-      }
+      updateUserInfo(userData);
+      closePopup(popupEdit);
     })
     .catch((err) => {
       console.error('Ошибка при обновлении данных пользователя:', err);
@@ -92,12 +90,10 @@ const handleAddCardSubmit = (evt) => {
 
   addNewCard(name, link)
     .then((cardData) => {
-      if (cardData) {
-        const newCard = addCard(cardData, deleteCardHandler, showImageCard, likeButtonHandler, currentUserId);
-        placesList.prepend(newCard);
-        closePopup(popupNewCard);
-        formAddCard.reset();
-      }
+      const newCard = addCard(cardData, deleteCardHandler, showImageCard, likeButtonHandler, currentUserId);
+      placesList.prepend(newCard);
+      closePopup(popupNewCard);
+      formAddCard.reset();
     })
     .catch((err) => {
       console.error('Ошибка при добавлении карточки:', err);
@@ -107,7 +103,7 @@ const handleAddCardSubmit = (evt) => {
     });
 };
 
-formEditAvatar.addEventListener('submit', (evt) => {
+const handleEditAvatarSubmit = (evt) => {
   evt.preventDefault();
   const avatarUrl = avatarUrlInput.value;
   const saveButton = formEditAvatar.querySelector('.popup__button');
@@ -116,11 +112,9 @@ formEditAvatar.addEventListener('submit', (evt) => {
 
   updateUserAvatar(avatarUrl)
     .then((userData) => {
-      if (userData) {
-        profileAvatar.style.backgroundImage = `url(${userData.avatar})`;
-        closePopup(popupEditAvatar);
-        formEditAvatar.reset();
-      }
+      profileAvatar.style.backgroundImage = `url(${userData.avatar})`;
+      closePopup(popupEditAvatar);
+      formEditAvatar.reset();
     })
     .catch((err) => {
       console.error('Ошибка при обновлении аватара:', err);
@@ -128,7 +122,7 @@ formEditAvatar.addEventListener('submit', (evt) => {
     .finally(() => {
       saveButton.textContent = 'Сохранить';
     });
-});
+};
 
 const deleteCardHandler = (cardElement, cardId) => {
   deleteCard(cardId)
@@ -145,7 +139,7 @@ const likeButtonHandler = (likeButton, cardId) => {
 
   toggleLike(cardId, isLiked)
     .then((updatedCard) => {
-      toggleLikeUI(likeButton, updatedCard.likes.length);
+      toggleLikeState(likeButton, updatedCard.likes.length);
     })
     .catch((err) => {
       console.error('Ошибка при обновлении лайка:', err);
@@ -163,7 +157,7 @@ Promise.all([getUserData(), getCards()])
   .then(([userData, cards]) => {
     updateUserInfo(userData);
     cards.forEach((cardData) => {
-      const card = addCard(cardData, deleteCardHandler, showImageCard, likeButtonHandler, userData._id);
+      const card = addCard(cardData, deleteCardHandler, showImageCard, likeButtonHandler, currentUserId);
       placesList.append(card);
     });
   })
@@ -187,13 +181,12 @@ addCardButton.addEventListener('click', () => {
 });
 
 popupCloses.forEach((button) => {
-  button.addEventListener('click', () => {
-    closePopup(button.closest('.popup'));
-  });
+  button.addEventListener('click', () => closePopup(button.closest('.popup')));
 });
 
 formEditProfile.addEventListener('submit', handleFormEditProfile);
 formAddCard.addEventListener('submit', handleAddCardSubmit);
+formEditAvatar.addEventListener('submit', handleEditAvatarSubmit);
 
 profileAvatar.addEventListener('click', () => {
   openPopup(popupEditAvatar);

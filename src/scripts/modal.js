@@ -22,4 +22,3 @@ export function closePopupOverlay(event) {
     closePopup(event.currentTarget);
   }
 }
-

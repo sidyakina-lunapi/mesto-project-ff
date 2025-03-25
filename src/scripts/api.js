@@ -1,4 +1,4 @@
-const cohortId = 'wff-cohort-34';  
+const cohortId = 'wff-cohort-34';
 const token = '27219f5e-a0a5-4393-b3fb-e8d6c367e05d';
 const baseUrl = 'https://nomoreparties.co/v1';
 
